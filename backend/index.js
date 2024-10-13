@@ -14,7 +14,11 @@ app.get('/ping', (req, res) => {
 });
 
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({
+    origin: allowedOrigins, // Only allow requests from your frontend
+    methods: ['GET', 'POST'], // Allow specific methods
+    allowedHeaders: ['Content-Type', 'Authorization'] // Allow specific headers
+}));
 
 // Routes
 app.use('/auth', AuthRouter);
