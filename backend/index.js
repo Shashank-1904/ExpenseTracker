@@ -21,9 +21,6 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
 }));
 
-// Or, to allow all origins (not recommended for production)
-app.use(cors()); 
-
 // Routes
 app.use('/auth', AuthRouter);
 
