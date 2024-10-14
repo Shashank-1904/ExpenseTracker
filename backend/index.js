@@ -14,7 +14,15 @@ app.get('/ping', (req, res) => {
 });
 
 app.use(bodyParser.json());
-app.use(cors());
+// Allow specific origin
+app.use(cors({
+  origin: 'https://expense-tracker-ui-brown.vercel.app', // Allow requests from your UI
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow specific methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
+}));
+
+// Or, to allow all origins (not recommended for production)
+app.use(cors()); 
 
 // Routes
 app.use('/auth', AuthRouter);
