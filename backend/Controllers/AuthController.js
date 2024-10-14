@@ -28,6 +28,11 @@ const login = async (req, res) => {
     try {
         const { uemail, upass } = req.body;
 
+        // Basic validation to ensure both email and password are provided
+        if (!uemail || !upass) {
+            return res.status(400).json({ message: "Email and Password are required", success: false });
+        }
+
         // Check if user with the given email exists
         const user = await UserModel.findOne({ uemail }); 
         if (!user) {
@@ -52,14 +57,15 @@ const login = async (req, res) => {
             message: "Login Successfully..!",
             success: true,
             jwtToken,
-            uemail,  // Now defined properly
+            uemail: user.uemail,  // Using user.uemail directly
             uname: `${user.ufname} ${user.ulname}`  // Concatenating ufname and ulname
         });
     } catch (err) {
-        console.error(err);  // Log the error for debugging purposes
+        console.error('Error during login:', err);  // More descriptive logging
         res.status(500).json({ message: "Internal Server Error..!", success: false });
     }
 };
+
 
 module.exports = {
     signup,
